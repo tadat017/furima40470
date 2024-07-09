@@ -1,36 +1,54 @@
 ### Users テーブル
-| Column     | Type         | Options                       |
-|------------|--------------|-------------------------------|
-| user_id    | INT          | PRIMARY KEY, AUTO_INCREMENT   |
-| username   | VARCHAR(255) | null: false, unique: true     |
-| email      | VARCHAR(255) | null: false, unique: true     |
-| password   | VARCHAR(255) | null: false                   |
-| created_at | TIMESTAMP    | DEFAULT CURRENT_TIMESTAMP     |
-| updated_at | TIMESTAMP    | DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP |
+| Column           | Type    | Options      |
+|------------------|---------|--------------|
+| id               | integer | PRIMARY KEY  |
+| nickname         | string  | null: false  |
+| email            | string  | null: false, unique: true |
+| password         | string  | null: false  |
+| last_name        | string  | null: false  |
+| first_name       | string  | null: false  |
+| last_name_kana   | string  | null: false  |
+| first_name_kana  | string  | null: false  |
+| date_of_birth    | date    | null: false  |
 
 ### Products テーブル
-| Column     | Type         | Options                       |
-|------------|--------------|-------------------------------|
-| product_id | INT          | PRIMARY KEY, AUTO_INCREMENT   |
-| user_id    | INT          | null: false, foreign_key: true |
-| name       | VARCHAR(255) | null: false                   |
-| description| TEXT         |                               |
-| price      | DECIMAL(10, 2)| null: false                  |
-| status     | VARCHAR(50)  | DEFAULT 'available'           |
-| created_at | TIMESTAMP    | DEFAULT CURRENT_TIMESTAMP     |
-| updated_at | TIMESTAMP    | DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP |
+| Column           | Type       | Options                        |
+|------------------|------------|--------------------------------|
+| id               | integer    | PRIMARY KEY                    |
+| user             | references | null: false, foreign_key: true |
+| name             | string     | null: false                    |
+| description      | text       |                                |
+| image            | string     | null: false                    |
+| category         | string     | null: false                    |
+| condition        | string     | null: false                    |
+| shipping_fee     | string     | null: false                    |
+| shipping_origin  | string     | null: false                    |
+| shipping_duration| string     | null: false                    |
+| price            | integer    | null: false                    |
+| fee              | integer    | null: false                    |
+| profit           | integer    | null: false                    |
+| status           | string     | default: 'available'           |
 
 ### Orders テーブル
-| Column      | Type         | Options                       |
-|-------------|--------------|-------------------------------|
-| order_id    | INT          | PRIMARY KEY, AUTO_INCREMENT   |
-| product_id  | INT          | null: false, foreign_key: true |
-| buyer_id    | INT          | null: false, foreign_key: true |
-| seller_id   | INT          | null: false, foreign_key: true |
-| total_price | DECIMAL(10, 2)| null: false                  |
-| order_status| VARCHAR(50)  | DEFAULT 'pending'             |
-| created_at  | TIMESTAMP    | DEFAULT CURRENT_TIMESTAMP     |
-| updated_at  | TIMESTAMP    | DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP |
+| Column      | Type       | Options     |
+|-------------|------------|-------------|
+| id          | integer    | PRIMARY KEY |
+| product     | references | null: false, foreign_key: true |
+| buyer       | references | null: false, foreign_key: { to_table: :users } |
+| seller      | references | null: false, foreign_key: { to_table: :users } |
+
+### Addresses テーブル
+| Column      | Type    | Options     |
+|-------------|---------|-------------|
+| id          | integer | PRIMARY KEY |
+| user        | references | null: false, foreign_key: true |
+| order       | references | null: false, foreign_key: true |
+| postal_code | string  | null: false |
+| prefecture  | string  | null: false |
+| city        | string  | null: false |
+| address1    | string  | null: false |
+| address2    | string  |             |
+| phone_number| string  | null: false |
 
 ### Association
 - Users
