@@ -12,41 +12,47 @@
 #### Association
 - has_many :products
 - has_many :orders
-- has_many :addresses
 
 ### Products テーブル
 
 | name             | string     | null: false                    |
-| description      | text       |                                |
+| description      | text       | null: false                    |
 | category         | string     | null: false                    |
-| condition        | string     | null: false                    |
-| shipping_fee     | string     | null: false                    |
+| condition        | integer    | null: false                    |
+| shipping_fee     | integer    | null: false                    |
 | prefecture       | integer    | null: false                    |
 | shipping_duration| integer    | null: false                    |
 | price            | integer    | null: false                    |
+| genre_id         | integer    | null: false                    |
+
 
 #### Association
-- belongs_to :user
-- has_many :orders
+
+- belongs_to :genre
+- belongs_to :condition
+- belongs_to :shipping_fee
+- belongs_to :prefecture
+- belongs_to :shipping_duration
+- has_one :order
 
 ### Orders テーブル
 
 | product     | references | null: false, foreign_key: true |
 | user        | references | null: false, foreign_key: true |
+| buyer_id    | integer    | null: false, foreign_key: true |
 
 #### Association
 - belongs_to :product
 - belongs_to :user
-- has_one :address
+- belongs_to :buyer, class_name: 'User', foreign_key: 'buyer_id'
 
 ### Addresses テーブル
 
 | order       | references | null: false, foreign_key: true |
 | postal_code | string  | null: false |
-| prefecture  | string  | null: false |
+| prefecture  | integer | null: false |
 | city        | string  | null: false |
-| address1    | string  | null: false |
-| address2    | string  |             |
+| address     | string  | null: false |             |
 | phone_number| string  | null: false |
 
 #### Association
