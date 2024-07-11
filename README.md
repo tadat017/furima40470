@@ -23,7 +23,7 @@
 | prefecture_id       | integer    | null: false                    |
 | shipping_duration_id| integer    | null: false                    |
 | price               | integer    | null: false                    |
-| user_id             | references | null: false, foreign_key: true |
+| user                | references | null: false, foreign_key: true |
 
 
 #### Association
@@ -36,19 +36,17 @@
 
 ### Orders テーブル
 
+| user | references | null: false, foreign_key: true |
 | product  | references | null: false, foreign_key: true |
-| buyer    | references | null: false, foreign_key: { to_table: :users } |
-| seller   | references | null: false, foreign_key: { to_table: :users } |
 
 #### Association
+- belongs_to :user
 - belongs_to :product
-- belongs_to :buyer, class_name: 'User', foreign_key: 'buyer_id'
-- belongs_to :seller, class_name: 'User', foreign_key: 'seller_id'
 - has_one :address
 
 ### Addresses テーブル
 
-| order_id     | references | null: false, foreign_key: true |
+| order        | references | null: false, foreign_key: true |
 | postal_code  | string  | null: false |
 | prefecture_id| integer | null: false |
 | city         | string  | null: false |
