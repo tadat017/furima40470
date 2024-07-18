@@ -10,5 +10,5 @@ class User < ApplicationRecord
          validates :last_name_kana, presence: true, format: { with: /\A[\p{katakana}\u30FC]+\z/, message: '全角カタカナを使用してください' }
          validates :first_name_kana, presence: true, format: { with: /\A[\p{katakana}\u30FC]+\z/, message: '全角カタカナを使用してください' }
          validates :date_of_birth, presence: true
-         validates :password, format: { with: /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]{6,}+\z/i, message: 'は半角6文字以上、英字と数字の両方を含めて設定してください' }
+         validates :password, format: { with: /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i, message: 'は半角6文字以上、英字と数字の両方を含めて設定してください' }
 end
