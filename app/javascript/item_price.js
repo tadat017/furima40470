@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('turbo:load', () => {
   
   const priceInput = document.getElementById('item-price');
   const addTaxDom = document.getElementById('add-tax-price');
@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   priceInput.addEventListener('input', () => {
     const inputValue = priceInput.value;
-    console.log(inputValue);
+
 
     if (inputValue >= 300 && inputValue <= 9999999) {
       const tax = Math.floor(inputValue * 0.1);
