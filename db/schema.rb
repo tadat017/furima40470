@@ -47,12 +47,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_22_164226) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "categories", charset: "utf8", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "items", charset: "utf8", force: :cascade do |t|
     t.string "name", null: false
     t.text "description", null: false
@@ -62,7 +56,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_22_164226) do
     t.integer "prefecture_id", null: false
     t.integer "scheduled_delivery_id", null: false
     t.integer "price", null: false
-    t.string "image"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
