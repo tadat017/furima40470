@@ -41,6 +41,7 @@
     </div>
     <table class="detail-table">
       <tbody>
+        
         <tr>
           <th class="detail-item">出品者</th>
           <td class="detail-value"><%=  @item.user.nickname %></td>
@@ -51,19 +52,19 @@
         </tr>
         <tr>
           <th class="detail-item">商品の状態</th>
-          <td class="detail-value"><%= Condition.find(@item.condition_id).name %></td>
+          <td class="detail-value"> <%= @item.condition.name %></td>
         </tr>
         <tr>
           <th class="detail-item">配送料の負担</th>
-          <td class="detail-value"><%= ShippingFeeStatus.find(@item.shipping_fee_status_id).name %></td>
+          <td class="detail-value"><%= @item.shipping_fee_status.name %></td>
         </tr>
         <tr>
           <th class="detail-item">発送元の地域</th>
-          <td class="detail-value"><%= Prefecture.find(@item.prefecture_id).name %></td>
+          <td class="detail-value"><%= @item.prefecture.name %></td>
         </tr>
         <tr>
           <th class="detail-item">発送日の目安</th>
-         <td class="detail-value"><%= ShippingDuration.find(@item.scheduled_delivery_id).name %></td>
+         <td class="detail-value"><%= @item.scheduled_delivery.name %></td>
         </tr>
       </tbody>
     </table>
