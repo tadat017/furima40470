@@ -20,32 +20,30 @@
         ¥ 999,999,999
       </span>
       <span class="item-postage">
-        <%=  @item.shipping_fee_status_id %>
+        <%=  ShippingFeeStatus.find(@item.shipping_fee_status_id).name %>
+        </span>
 
-    
-
- <% if user_signed_in? && current_user.id == @item.user_id %>
+        </div>
+ <% if user_signed_in? %>
+  <% if current_user.id == @item.user_id %>
     <%= link_to "商品の編集", edit_item_path(@item.id), method: :get, class: "item-red-btn" %>
     <p class="or-text">or</p>
-    <%= link_to "削除", item_path(@item.id), data: {turbo_method: :delete}, class:"item-destroy" %>
-<<% elsif user_signed_in? && current_user.id != @item.user_id %>
+    <%= link_to "削除",  "#", data: { turbo_method: :delete }, class: "item-destroy" %>
+  <% else %>
     <%# 商品が売れていない場合はこちらを表示しましょう %>
-    <%= link_to "購入画面に進む", "#" ,class:"item-red-btn"%>
+    <%= link_to "購入画面に進む", "#", class: "item-red-btn" %>
     <%# //商品が売れていない場合はこちらを表示しましょう %>
+  <% end %>
+<% end %>
 
-    <% end %>
-
-
-    
-
-    <div class="item-description">
+  <div class="item-description">
       <span><%= @item.description %></span>
     </div>
     <table class="detail-table">
       <tbody>
         <tr>
           <th class="detail-item">出品者</th>
-          <td class="detail-value"><%= @item.user_id %></td>
+          <td class="detail-value"><%=  @item.user.nickname %></td>
         </tr>
         <tr>
           <th class="detail-item">カテゴリー</th>
@@ -53,19 +51,19 @@
         </tr>
         <tr>
           <th class="detail-item">商品の状態</th>
-          <td class="detail-value"><%= @item.condition %></td>
+          <td class="detail-value"><%= Condition.find(@item.condition_id).name %></td>
         </tr>
         <tr>
           <th class="detail-item">配送料の負担</th>
-          <td class="detail-value"><%= @item.shipping_fee_status_id %></td>
+          <td class="detail-value"><%= ShippingFeeStatus.find(@item.shipping_fee_status_id).name %></td>
         </tr>
         <tr>
           <th class="detail-item">発送元の地域</th>
-          <td class="detail-value"><%=  @item.prefecture %></td>
+          <td class="detail-value"><%= Prefecture.find(@item.prefecture_id).name %></td>
         </tr>
         <tr>
           <th class="detail-item">発送日の目安</th>
-          <td class="detail-value"><%= @item.scheduled_delivery %></td>
+         <td class="detail-value"><%= ShippingDuration.find(@item.scheduled_delivery_id).name %></td>
         </tr>
       </tbody>
     </table>
