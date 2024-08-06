@@ -1,19 +1,22 @@
 class OrdersController < ApplicationController
+  #before_action :authenticate_user!
+  before_action :set_item, only: [:index, :create]
 
   def index
-    @order = Order.new
-    @item = Item.find(params[:item_id])
+    @order_address = OrderAddress.new
   end
 
   def create
-    @item = Item.find(params[:item_id])
-    @order = Order.new(order_params)
+    @order_address = OrderAddress.new(order_address_params)
 
-    if @order.valid?
+    if @order_address.save
+      # 成功時の処理
+      #@order_address.valid?
       process_payment
-      @order.save
+      #@order_address.save
       redirect_to root_path
     else
+      Rails.logger.info(@order_address.errors.full_messages) # エラーメッセージをログに出力
       render :index, status: :unprocessable_entity
     end
   end
@@ -23,14 +26,17 @@ class OrdersController < ApplicationController
   def process_payment
     Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
     Payjp::Charge.create(
-      amount: @item.price,  # 商品の値段
-      card: order_params[:token],    # カードトークン
+      amount: @item.price,
+      card: order_address_params[:token],
       currency: 'jpy'
     )
   end
 
-  def order_params
-    params.require(:order_address).permit(:postal_code, :prefecture_id, :city, :addresses, :building, :phone_number).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
+  def set_item
+    @item = Item.find(params[:item_id])
   end
 
+  def order_address_params
+    params.require(:order_address).permit(:postal_code, :prefecture_id, :city, :addresses, :building, :phone_number, :token).merge(user_id: current_user.id, item_id: params[:item_id])
+  end #kakunin
 end
