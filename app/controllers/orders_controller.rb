@@ -11,9 +11,9 @@ class OrdersController < ApplicationController
 
     if @order_address.save
       # 成功時の処理
-      #@order_address.valid?
-      process_payment
-      #@order_address.save
+      @order_address.valid?
+      pay_item
+      
       redirect_to root_path
     else
       Rails.logger.info(@order_address.errors.full_messages) # エラーメッセージをログに出力
@@ -23,8 +23,8 @@ class OrdersController < ApplicationController
 
   private
 
-  def process_payment
-    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+  def  pay_item
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]#テスト時戻す
     Payjp::Charge.create(
       amount: @item.price,
       card: order_address_params[:token],

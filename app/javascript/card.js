@@ -17,7 +17,16 @@ const pay = () => {
       } else {
         const token = response.id;
         console.log(token)
+        const renderDom = document.getElementById("charge-form");
+        const tokenObj = `<input value=${token} name='token'>`;
+        renderDom.insertAdjacentHTML("beforeend", tokenObj);
+        debugger;
+
       }
+      numberElement.clear();
+      expiryElement.clear();
+      cvcElement.clear();
+      document.getElementById("charge-form").submit();
     });
     e.preventDefault();
   });
