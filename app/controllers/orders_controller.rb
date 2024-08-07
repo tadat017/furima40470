@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_item, only: [:index, :create]
+  before_action :ensure_not_seller, only: [:index, :create]#
 
   def index
     @order_address = OrderAddress.new
@@ -53,4 +54,8 @@ class OrdersController < ApplicationController
       item_id: params[:item_id]
     )
   end
+  def ensure_not_seller#
+    if @item.user_id == current_user.id
+      redirect_to root_path, alert: "出品者は自分の商品を購入できません。"
+    end
   end
