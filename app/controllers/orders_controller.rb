@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  #before_action :authenticate_user!
+  before_action :authenticate_user!
   before_action :set_item, only: [:index, :create]
 
   def index
@@ -25,7 +25,7 @@ class OrdersController < ApplicationController
   private
 
   def  pay_item
-    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]#テスト時戻すPAYJP_SECRET_KEY
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
     token = order_address_params[:token]
     logger.debug "Received token: #{token}"
     Payjp::Charge.create(
