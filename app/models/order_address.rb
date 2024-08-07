@@ -6,7 +6,7 @@ class OrderAddress
     validates :postal_code
     validates :prefecture_id
     validates :city
-    #validates :addresses
+    validates :addresses
     validates :phone_number
     validates :token
     validates :user_id

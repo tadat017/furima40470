@@ -54,3 +54,9 @@ end
 def move_to_root
   redirect_to root_path if current_user.id != @item.user_id
 end
+
+def redirect_if_sold_out
+  if @item.sold_out?
+    redirect_to root_path, notice: "この商品はすでに売り切れています。"
+  end
+end
