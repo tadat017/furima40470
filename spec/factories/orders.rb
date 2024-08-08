@@ -1,5 +1,7 @@
 FactoryBot.define do
   factory :order do
-    price {3000}
+ 
+    association :user 
+    association :item
   end
 end

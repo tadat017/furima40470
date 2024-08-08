@@ -1,17 +1,17 @@
+
 FactoryBot.define do
   factory :item do
-    name { 'テスト商品' }
-    description { 'テスト商品説明' }
-    category_id { 2 }
-    condition_id { 2 }
-    shipping_fee_status_id { 2 }
-    prefecture_id { 2 }
-    scheduled_delivery_id { 2 }
-    price { 500 }
+    name { "TestItem" }
+    description { "TestDescription" }
+    category_id { 1 }
+    condition_id { 1 }
+    shipping_fee_status_id { 1 }
+    prefecture_id { 1 }
+    scheduled_delivery_id { 1 }
+    price { 3000 }
     association :user
-
     after(:build) do |item|
-      item.image.attach(io: File.open('app/assets/images/star.png'), filename:  'test_image.png', content_type: 'image/jpeg')
+      item.image.attach(io: File.open('spec/fixtures/test_image.png'), filename: 'test_image.png', content_type: 'image/png')
     end
   end
 end

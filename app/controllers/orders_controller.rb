@@ -1,7 +1,9 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_item, only: [:index, :create]
-  before_action :ensure_not_seller, only: [:index, :create]#
+  before_action :ensure_not_seller, only: [:index, :create]
+  before_action :ensure_not_sold, only: [:index, :create]
+
 
   def index
     @order_address = OrderAddress.new
@@ -12,13 +14,11 @@ class OrdersController < ApplicationController
     @order_address = OrderAddress.new(order_address_params)
 
     if @order_address.save
-      # 成功時の処理
       @order_address.valid?
       pay_item
-      
       redirect_to root_path
     else
-      Rails.logger.info(@order_address.errors.full_messages) # エラーメッセージをログに出力
+      Rails.logger.info(@order_address.errors.full_messages)  
       render :index, status: :unprocessable_entity
     end
   end
@@ -54,8 +54,16 @@ class OrdersController < ApplicationController
       item_id: params[:item_id]
     )
   end
-  def ensure_not_seller#
+
+  def ensure_not_seller
     if @item.user_id == current_user.id
-      redirect_to root_path, alert: "出品者は自分の商品を購入できません。"
+      redirect_to root_path,  #alert:"出品者は自分の商品を購入できません。"
     end
   end
+
+  def ensure_not_sold
+    if @item.order.present?
+      redirect_to root_path, #alert:"販売済みの商品は購入できません。"
+    end
+  end
+end
