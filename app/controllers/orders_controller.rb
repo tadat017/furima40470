@@ -14,7 +14,7 @@ class OrdersController < ApplicationController
     @order_address = OrderAddress.new(order_address_params)
 
     if @order_address.save
-      @order_address.valid?
+      
       pay_item
       redirect_to root_path
     else
@@ -28,7 +28,6 @@ class OrdersController < ApplicationController
   def  pay_item
     Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
     token = order_address_params[:token]
-    logger.debug "Received token: #{token}"
     Payjp::Charge.create(
       amount: @item.price,
       card: order_address_params[:token],
@@ -54,16 +53,12 @@ class OrdersController < ApplicationController
       item_id: params[:item_id]
     )
   end
-
   def ensure_not_seller
-    if @item.user_id == current_user.id
-      redirect_to root_path,  #alert:"出品者は自分の商品を購入できません。"
-    end
+    redirect_to root_path if @item.user_id == current_user.id
   end
 
+
   def ensure_not_sold
-    if @item.order.present?
-      redirect_to root_path, #alert:"販売済みの商品は購入できません。"
-    end
+    redirect_to root_path if @item.order.present?
   end
 end
