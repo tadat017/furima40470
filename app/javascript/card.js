@@ -22,7 +22,7 @@ const pay = () => {
       } else {
         const token = response.id;
         console.log(token);
-        const tokenObj = `<input type="hidden" name="token" value="${token}">`; 
+        const tokenObj =  `<input value=${token} name='token' type="hidden">`;
         form.insertAdjacentHTML("beforeend", tokenObj); 
 
         

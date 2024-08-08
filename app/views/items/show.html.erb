@@ -14,11 +14,12 @@
 
       <div class="sold-out">
         <span>Sold Out!!</span>
+          </div>
           <% end %>
       </div>
       <% unless @item.sold_out? %>
       <%# //商品が売れている場合は、sold outを表示しましょう %>
-    </div>
+    
     <div class="item-price-box">
       <span class="item-price">
        <%= @item.price %>
@@ -42,7 +43,7 @@
   <% end %>
   <% end %>
  <% end %>
-  <div class="item-description">
+ <div class="item-description">
       <span><%= @item.description %></span>
     </div>
     <table class="detail-table">
