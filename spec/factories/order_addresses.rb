@@ -11,7 +11,6 @@ FactoryBot.define do
 
    
  
-      association :user 
-      association :item
+      
   end
 end

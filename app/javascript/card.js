@@ -14,7 +14,7 @@ const pay = () => {
   const form = document.getElementById('charge-form');
   form.addEventListener("submit", (e) => {
     e.preventDefault(); 
-    console.log("フォーム送信時にイベント発火");
+    
 
     payjp.createToken(numberElement).then((response) => {
       if (response.error) {
@@ -33,3 +33,4 @@ const pay = () => {
 };
 
 window.addEventListener("turbo:load", pay);
+window.addEventListener("turbo:render", pay);

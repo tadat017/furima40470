@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe OrderAddress, type: :model do
   before do
     @user = FactoryBot.create(:user)
-    @item = FactoryBot.create(:item, user: @user)
+    @item = FactoryBot.create(:item)
     
     @order_address = FactoryBot.build(:order_address, user_id: @user.id, item_id: @item.id)
   end
@@ -73,6 +73,23 @@ RSpec.describe OrderAddress, type: :model do
       @order_address.item_id = nil
       @order_address.valid?
       expect(@order_address.errors.full_messages).to include("Item can't be blank")
+    end
+
+    it 'buildingが空でも保存できる' do
+      @order_address.building = ''
+      expect(@order_address).to be_valid
+    end
+
+    it 'phone_numberが12桁以上では購入できない' do
+      @order_address.phone_number = '090123456789'
+      @order_address.valid?
+      expect(@order_address.errors.full_messages).to include('Phone number is invalid. Enter it as a 10 or 11 digit number')
+    end
+    
+    it 'phone_numberが英数字以外が含まれている場合は購入できない' do
+      @order_address.phone_number = '090-1234-5678'
+      @order_address.valid?
+      expect(@order_address.errors.full_messages).to include('Phone number is invalid. Enter it as a 10 or 11 digit number')
     end
   end
 end

@@ -13,8 +13,9 @@ class OrdersController < ApplicationController
   def create
     @order_address = OrderAddress.new(order_address_params)
 
-    if @order_address.save
-      
+    if @order_address.valid?
+      @order_address.save
+      redirect_to root_path
       pay_item
       redirect_to root_path
     else
