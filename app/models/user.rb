@@ -13,4 +13,6 @@ class User < ApplicationRecord
          validates :password, format: { with: /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i, message: 'は半角6文字以上、英字と数字の両方を含めて設定してください' }
          
          has_many :items
+         
+         has_many :orders, through: :items
  end

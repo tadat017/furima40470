@@ -2,6 +2,7 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update,:destroy]
   before_action :set_item, only: [:edit, :update,:show,:destroy]
   before_action :move_to_root, only: [:edit, :update,:destroy]
+  before_action :redirect_if_sold_out, only: [:edit]
 
   def index
     @items = Item.all.order('created_at DESC')
@@ -53,4 +54,10 @@ end
 
 def move_to_root
   redirect_to root_path if current_user.id != @item.user_id
+end
+
+def redirect_if_sold_out
+  if @item.sold_out?
+    redirect_to root_path, notice: "この商品はすでに売り切れています。"
+  end
 end

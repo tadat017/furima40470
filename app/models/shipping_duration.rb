@@ -7,5 +7,5 @@ class ShippingDuration < ActiveHash::Base
   ]
 
   include ActiveHash::Associations
-  has_many :products
+  has_many :item
 end
