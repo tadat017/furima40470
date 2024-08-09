@@ -7,5 +7,5 @@ class ScheduledDelivery < ActiveHash::Base
   ]
 
   include ActiveHash::Associations
-  has_one :item
+  has_many :item
 end
