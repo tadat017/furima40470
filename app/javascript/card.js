@@ -18,7 +18,7 @@ const pay = () => {
 
     payjp.createToken(numberElement).then((response) => {
       if (response.error) {
-        console.error("Token generation error: ", response.error.message);
+       
       } else {
         const token = response.id;
         console.log(token);
