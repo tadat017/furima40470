@@ -19,6 +19,6 @@ const setPriceCalculation = () => {
     }
   });
 };
-
+ 
 window.addEventListener('turbo:load', setPriceCalculation);
 window.addEventListener('turbo:render', setPriceCalculation);
