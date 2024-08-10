@@ -21,7 +21,7 @@ const pay = () => {
        
       } else {
         const token = response.id;
-        
+    
         const tokenObj =  `<input value=${token} name='token' type="hidden">`;
         form.insertAdjacentHTML("beforeend", tokenObj); 
 
@@ -33,4 +33,3 @@ const pay = () => {
 };
 
 window.addEventListener("turbo:load", pay);
-window.addEventListener("turbo:render", pay);
