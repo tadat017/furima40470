@@ -1,24 +1,37 @@
-const setPriceCalculation = () => {
-  const priceInput = document.getElementById('item-price');
-  if (!priceInput) return;
 
-  const addTaxDom = document.getElementById('add-tax-price');
-  const profitDom = document.getElementById('profit');
 
-  priceInput.addEventListener('input', () => {
-    const inputValue = priceInput.value;
+const pay = () => {
+  const publicKey = gon.public_key;
+  const payjp = Payjp(publicKey);
 
-    if (inputValue >= 300 && inputValue <= 9999999) {
-      const tax = Math.floor(inputValue * 0.1);
-      const profit = Math.floor(inputValue - tax);
-      addTaxDom.innerHTML = tax.toLocaleString();
-      profitDom.innerHTML = profit.toLocaleString();
-    } else {
-      addTaxDom.innerHTML = '';
-      profitDom.innerHTML = '';
-    }
+  const elements = payjp.elements();
+  const numberElement = elements.create('cardNumber');
+  const expiryElement = elements.create('cardExpiry');
+  const cvcElement = elements.create('cardCvc');
+
+  numberElement.mount('#number-form');
+  expiryElement.mount('#expiry-form');
+  cvcElement.mount('#cvc-form');
+
+  const form = document.getElementById('charge-form');
+  form.addEventListener("submit", (e) => {
+    e.preventDefault(); 
+    
+
+    payjp.createToken(numberElement).then((response) => {
+      if (response.error) {
+        console.error("Token generation error: ", response.error.message);
+      } else {
+        const token = response.id;
+        console.log(token);
+        const tokenObj =  `<input value=${token} name='token' type="hidden">`;
+        form.insertAdjacentHTML("beforeend", tokenObj); 
+
+        
+        form.submit();
+      }
+    });
   });
 };
- 
-window.addEventListener('turbo:load', setPriceCalculation);
-window.addEventListener('turbo:render', setPriceCalculation);
+
+window.addEventListener("turbo:load", pay);
