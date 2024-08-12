@@ -53,6 +53,7 @@ group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
 gem 'rspec-rails'
   gem 'factory_bot_rails'
+  gem 'faker'
 end
 
 group :development do
@@ -76,3 +77,8 @@ end
 group :production do
   gem 'pg'
 end
+gem 'active_hash'
+gem 'devise'
+gem 'payjp'
+gem 'dotenv-rails'
+gem 'gon'
