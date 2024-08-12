@@ -1,5 +1,6 @@
 const pay = () => {
   const publicKey = gon.public_key;
+  console.log( gon.public_key)
   const payjp = Payjp(publicKey);
 
   const elements = payjp.elements();
@@ -26,8 +27,9 @@ const pay = () => {
         form.insertAdjacentHTML("beforeend", tokenObj); 
 
         
-        form.submit();
+        
       }
+      form.submit();
     });
   });
 };

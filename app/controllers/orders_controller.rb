@@ -15,11 +15,11 @@ class OrdersController < ApplicationController
 
     if @order_address.valid?
       @order_address.save
-      
+    
       pay_item
       redirect_to root_path and return
     else
-      Rails.logger.info(@order_address.errors.full_messages)  
+      
       render :index, status: :unprocessable_entity
     end
   end
