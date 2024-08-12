@@ -1,6 +1,6 @@
 const pay = () => {
   const publicKey = gon.public_key;
-  console.log( gon.public_key)
+  
   const payjp = Payjp(publicKey);
 
   const elements = payjp.elements();
@@ -13,19 +13,14 @@ const pay = () => {
   cvcElement.mount('#cvc-form');
 
   const form = document.getElementById('charge-form');
-  form.addEventListener("submit", (e) => {
-    e.preventDefault(); 
-
-
-    payjp.createToken(numberElement).then((response) => {
+  form.addEventListener("submit", (e) => { 
+    payjp.createToken(numberElement).then(function (response) {
       if (response.error) {
-       
-      } else {
+       } else {
         const token = response.id;
-   
         const tokenObj =  `<input value=${token} name='token' type="hidden">`;
         form.insertAdjacentHTML("beforeend", tokenObj); 
-
+      
         
         
       }
@@ -34,4 +29,4 @@ const pay = () => {
   });
 };
 window.addEventListener("turbo:load", pay);
-window.addEventListener("turbo:load", pay);
+window.addEventListener("turbo:render", pay);
