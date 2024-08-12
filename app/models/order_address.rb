@@ -4,7 +4,7 @@ class OrderAddress
 
   with_options presence: true do
     validates :postal_code, format: { with: /\A\d{3}-\d{4}\z/, message: 'is invalid. Enter it as follows (e.g. 123-4567)' }
-    validates :prefecture_id, numericality: { other_than: 0, message: 'Select' } 
+    validates :prefecture_id, numericality: { other_than: 1, message: 'Select' } 
     validates :city
     validates :addresses
     validates :phone_number, format: { with: /\A\d{10,11}\z/, message: 'is invalid. Enter it as a 10 or 11 digit number' }
